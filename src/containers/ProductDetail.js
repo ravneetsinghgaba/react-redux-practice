@@ -7,7 +7,7 @@ import { removeSelectedProduct, selectedProduct } from "../redux/actions/product
 const ProductDetail = () => {
     const product = useSelector((state) => state.product);
     const {image, title, price, category, description} = product;
-    const { productId } = useParams();
+    const { productId } = useParams(); //this allow us to use value of the id from the url. useParams is basically used if a value, such as id, is dynamic.
     const dispatch = useDispatch()
 
     const fetchProductDetail = async () => {
@@ -16,12 +16,14 @@ const ProductDetail = () => {
             .catch(err => {
                 console.log("Err", err);
             });
+        //dispatching the action    
         dispatch(selectedProduct(response.data));
     };
 
     useEffect(() => {
         if (productId && productId !== "")
             fetchProductDetail();
+        //to cleanup on going back to the listing page
         return () => {
             dispatch(removeSelectedProduct());
         }

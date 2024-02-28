@@ -8,15 +8,18 @@ const ProductListing = () => {
     const products = useSelector((state) => state);
     const dispatch = useDispatch();
 
+    //function to get data  from the api
     const fetchProducts = async () => {
         const response = await axios
             .get("https://fakestoreapi.com/products")
             .catch((err) => {
                 console.log("Err", err);
-            });    
+            });
+        //dispatching the action        
         dispatch(setProducts(response.data));
     };
 
+    //using useEffect to trigger the fetch profuct function
     useEffect(() => {
         fetchProducts();
     }, []);
